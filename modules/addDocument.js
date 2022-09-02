@@ -1,17 +1,14 @@
 import mongoose from "mongoose";
 import d4sModel from "./feed.js";
 
-const addDocument = function() {
-    // const feed_instance = new d4sModel({
-    //     date: '2022-08-25', //update to input variables from index.js
-    //     user: 'testusername',
-    //     content: 'test of the content to see if it works'
-    // })
+const addDocument = function(feedDate, feedUser, feedContent) {
 
+    //if already in db, do not add*****
+    console.log('adding to database')
     d4sModel.create({
-        date: '2022-08-25', //update to input variables from index.js
-        user: 'testusername',
-        content: 'test of the content to see if it works'
+        date: feedDate,
+        user: feedUser,
+        content: feedContent
         }, 
         function (err, feed_instance) {
             if (err) return handleError(err);
