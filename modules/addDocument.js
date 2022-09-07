@@ -1,18 +1,30 @@
 import mongoose from "mongoose";
 import d4sModel from "./feed.js";
 
-const addDocument = function(feedDate, feedUser, feedContent) {
+async function addDocument(feedDate, feedUser, feedContent) {
+    const connection = mongoose.connection;
+    const collection = connection.db.collection("dailyFeed");
+    console.log('Adding WTS post');
 
-    //if already in db, do not add*****
-    console.log('adding to database')
-    d4sModel.create({
-        date: feedDate,
-        user: feedUser,
-        content: feedContent
-        }, 
-        function (err, feed_instance) {
-            if (err) return handleError(err);
+    //Query db for post, add post if post not found
+    const query = d4sModel.findOne({content: feedContent}, function(err, docs) {
+        if (err) {
+            console.log(err);
+        } else {
+
+            if (docs === null) {
+                console.log('Add WTS post to db');
+                d4sModel.create({
+                    date: feedDate,
+                    user: feedUser,
+                    content: feedContent
+                });
+                //add function to notify user of new post*****
+            } else {
+                console.log('Repeat post not added to db');
+            };
+        };
     });
-}
+};
 
 export default addDocument
