@@ -1,12 +1,41 @@
 import RSSParser from 'rss-parser';
+import express from 'express';
 import connectDb from './modules/connectDb.js'
 import deleteOldFeed from './modules/compareDate.js';
-import d4sSchema from './modules/feed.js';
+import d4sModel from './modules/feed.js';
 import addDocument from './modules/addDocument.js';
 
+function startServer() {
+    const app = express();
+    app.set('view engine', 'ejs');
+    
+    app.get('/', (req, res) => {
+            // let feedList = [{'feedtest': 'feed one'}, {'feedtest': 'feed two'}];
+            // let feedList = getDbFeed()
+            const query = d4sModel.find({}, function(err, feedList) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (feedList) {
+                        return res.render('index', {'feedList': feedList});
+                        //how to get this in ejs, send to controller?*****
+                    } else {
+                        return console.log('No feed in db to show');
+                        //how to get this in ejs, send to controller?*****
+                    };
+                };
+            });
+          });
+        
+    const server = app.listen(7000, () => {
+        console.log(`Express running → PORT ${server.address().port}`);
+    });
+}
+
+//maybe move this function to another file?****
 function getFeed() {
     //Update feedUrl
-    const feedUrl = 'https://www.reddit.com/r/flashlight/comments/x2xnze/bst_september_2022_buy_sell_trade_thread.rss';
+    const feedUrl = 'https://www.reddit.com/r/flashlight/comments/xslghd/bst_october_2022_buy_sell_trade_thread.rss';
     const parse = async url =>{
         const feed = await new RSSParser().parseURL(url);
 
@@ -25,7 +54,7 @@ function getFeed() {
                     addDocument(feedDate, item.author, item.contentSnippet);
                     console.log('WTS post')
                 } else {
-                    console.log('Item is not WTS post')
+                    console.log('Not WTS post')
                 };
             };
         });
@@ -35,10 +64,9 @@ function getFeed() {
     console.log('Parsing' + feedUrl);
     parse(feedUrl);
 }
-//if the feed date is not the same as in db, empty db
-//if the feed (need an identifier e.g. author, content, for each feed) is not the same => add new feed to db
-//send notification with update (make new function or module for this)
+
+//send notification with update (make new function or module for this)****
 
 connectDb()
 getFeed()
-// addDocument(feedDate, feedUser, feedContent) //put this in get feed?
+startServer()

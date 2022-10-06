@@ -1,11 +1,9 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import d4sModel from './feed.js';
 
 //if the feed date is not the same as date in db, empty db
 async function deleteOldFeed(feedDate) {
-    const connection = mongoose.connection;
-    const collection = connection.db.collection("dailyFeed");
-    console.log('running date compare')
+    console.log('running date compare');
 
     //Delete old feed in db
     const query = d4sModel.findOne({date: {$lt:feedDate}}, function(err, docs) {
@@ -14,7 +12,7 @@ async function deleteOldFeed(feedDate) {
         } else {
 
             if (docs) {
-                console.log('Deleting old feed')
+                console.log('Deleting old feed in db');
                 d4sModel.deleteMany(({}), function(err, result) {
                     if (err) {
                       console.log(err);
@@ -23,7 +21,7 @@ async function deleteOldFeed(feedDate) {
                     }
                 });
             } else {
-                return console.log('Add to the collection');
+                return console.log('No old feed in db to delete');
             };
         };
     });

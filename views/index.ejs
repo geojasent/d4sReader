@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body class="container">
+
+    <h1>d4sReader Daily Feed</h1>
+    <h3> <%= feedList[0].date %> </h3>
+    <ul>
+        <% feedList.forEach(function(feedItem){ %>
+            <li><strong> <%= feedItem.user %> </strong>
+                <ul>
+                    <li> <%= feedItem.content %> </li>
+                </ul>
+            </li>
+        <% }); %>
+      </ul>
+      <button>Refresh feed</button>
+</body>
+</html>

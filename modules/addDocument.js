@@ -1,9 +1,7 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import d4sModel from "./feed.js";
 
 async function addDocument(feedDate, feedUser, feedContent) {
-    const connection = mongoose.connection;
-    const collection = connection.db.collection("dailyFeed");
     console.log('Adding WTS post');
 
     //Query db for post, add post if post not found
