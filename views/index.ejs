@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <script type='module' src='http://localhost:7000/public/pageReload.js' defer></script>
 </head>
-<body class="container">
+<body class='container'>
 
     <h1>d4sReader Daily Feed</h1>
-    <h3> <%= feedList[0].date %> </h3>
+    <h3> <%= new Date().toDateString() %> </h3>
     <ul>
         <% feedList.forEach(function(feedItem){ %>
             <li><strong> <%= feedItem.user %> </strong>
@@ -16,6 +16,9 @@
             </li>
         <% }); %>
       </ul>
-      <button>Refresh feed</button>
+
+      <h3>Page refreshes in: <span id='timer'></span></h3>
+
+      <button id='refreshButton' onclick=<%='window.location.reload();'%>>Refresh page</button>
 </body>
 </html>

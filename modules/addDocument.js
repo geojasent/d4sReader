@@ -1,4 +1,3 @@
-// import mongoose from "mongoose";
 import d4sModel from "./feed.js";
 
 async function addDocument(feedDate, feedUser, feedContent) {
