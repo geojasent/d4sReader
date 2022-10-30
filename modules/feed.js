@@ -3,9 +3,13 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const d4sSchema = new Schema({
+    id: {
+        type: String,
+        required: true
+    },
     date: {
-      type: String,
-      required: true
+        type: String,
+        required: true
     },
     user: {
         type: String,
