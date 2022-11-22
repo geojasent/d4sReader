@@ -1,4 +1,5 @@
 import d4sModel from "./feed.js";
+import sendPushNotification from '../index.js';
 
 async function addDocument(feedId, feedDate, feedUser, feedContent) {
 
@@ -15,7 +16,7 @@ async function addDocument(feedId, feedDate, feedUser, feedContent) {
                     user: feedUser,
                     content: feedContent
                 });
-                //add function to notify user of new post*****
+                sendPushNotification();
             } else {
                 console.log('Repeat post not added to db');
             };
@@ -27,8 +28,9 @@ async function addDocument(feedId, feedDate, feedUser, feedContent) {
 async function updateDocument(feedId, feedContent) {
     console.log('Updating document in db')
 
-    //Query db to update post - test to see if this works****
+    //Query db to update post
     const query = await d4sModel.updateOne({id: feedId}, {content: feedContent})
+    sendPushNotification();
 }
 
 export { addDocument, updateDocument } 

@@ -4,7 +4,7 @@ import { deleteOldFeed, checkDb } from './checkDb.js';
 
 function getFeed() {
     //Update feedUrl every month
-    const feedUrl = 'https://www.reddit.com/r/flashlight/comments/xslghd/bst_october_2022_buy_sell_trade_thread.rss';
+    const feedUrl = 'https://www.reddit.com/r/flashlight/comments/yiy5pg/bst_november_2022_buy_sell_trade_thread.rss';
     const parse = async url =>{
         const feed = await new RSSParser().parseURL(url);
 
@@ -16,7 +16,7 @@ function getFeed() {
         //Check db
         feed.items.forEach(item => {
             if (item.pubDate.split('T')[0] == feedDate) { 
-                let content = item.contentSnippet.split(' ');
+                let content = item.contentSnippet;
                 if (content.includes('WTS') || content.includes('[WTS]') || content.includes('wts') || content.includes('[wts]')) {
                     checkDb(item.id, feedDate, item.author, item.contentSnippet)
                 } else {

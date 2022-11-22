@@ -101,7 +101,7 @@ To get a local copy up and running follow these simple example steps.
 ## Roadmap
 
 - [x] Continuously updated feed and webpage
-- [ ] Push notification
+- [x] Push notification
 - [ ] Reactjs user interface
     - [ ] Nested Feature
 
